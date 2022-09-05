@@ -1,0 +1,34 @@
+{
+	"info": {
+		"_postman_id": "985145dc-1d4e-46d7-bc8a-941dfc0f4db1",
+		"name": "s38",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19369115"
+	},
+	"item": [
+		{
+			"name": "Get Profile",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
