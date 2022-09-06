@@ -4,5 +4,10 @@ const router = express.Router();
 const auth = require('../auth');
 
 router.post('/create', auth.authenticateToken, courseControllers.addCourse);
+router.get('/coursesOffered', auth.authenticateToken, courseControllers.getAllCourse);
+router.get('/coursesOfferedActive', courseControllers.getAllActiveCourse);
+router.get('/:id', courseControllers.getSpecificCourse);
+router.put('/update/:id', auth.authenticateToken, courseControllers.updateCourse);
+router.patch('/archive/:id', auth.authenticateToken, courseControllers.archiveCourse);
 
 module.exports = router;
