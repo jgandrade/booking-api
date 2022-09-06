@@ -11,6 +11,7 @@ module.exports.addCourse = (req, res) => {
             courseSlots: req.body.courseSlots
         })
 
+        
         return newCourse.save()
             .then(result => res.send("Successfully Saved"))
             .catch(err => res.send(err.message));
