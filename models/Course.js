@@ -31,6 +31,10 @@ let CourseSchema = new mongoose.Schema({
                 type: String,
                 required: [true, "Course Id is required"]
             },
+            email: {
+                type: String,
+                required: [true, "Course Id is required"]
+            },
             isPaid: {
                 type: Boolean,
                 default: true

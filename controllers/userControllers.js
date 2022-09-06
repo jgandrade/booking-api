@@ -1,10 +1,11 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const auth = require('../auth');
+const Course = require('../models/Course');
 
 module.exports.getProfile = (req, res) => {
     const userData = auth.decode(req.headers.authorization);
-    
+
     return User.findById(userData.id)
         .then(result => {
             result.password = "***";
@@ -57,4 +58,38 @@ module.exports.login = (req, res) => {
                 return res.send("Email is not found");
             }
         }).catch(err => res.send(err));
+}
+
+// Enroll a Course
+
+module.exports.enrollCourse = async (req, res) => {
+    const userData = auth.decode(req.headers.authorization);
+    let courseName = await Course.findById(req.body.courseId).then(result => result.courseName);
+
+    let data = {
+        userId: userData.id,
+        email: userData.email,
+        courseId: req.body.courseId,
+        courseName: courseName
+    }
+
+    let isUserUpdated = await User.findById(data.userId).then(user => {
+        user.enrollments.push({
+            courseId: data.courseId,
+            courseName: data.courseName
+        })
+
+        return user.save().then(result => { console.log(result); return true }).catch(err => { console.log(err); return false });
+    });
+
+    let isCourseUpdated = await Course.findById(data.courseId).then(course => {
+        course.courseEnrollees.push({
+            userId: data.userId,
+            email: data.email
+        })
+        course.slots--;
+        return course.save().then(result => { console.log(result); return true }).catch(err => { console.log(err); return false });
+    });
+
+    (isCourseUpdated && isUserUpdated) ? res.send(true) : res.send(false)
 }

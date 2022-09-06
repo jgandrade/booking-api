@@ -5,6 +5,7 @@ const auth = require('../auth');
 
 router.post('/register', userControllers.register);
 router.post('/login', userControllers.login);
+router.post('/enroll', auth.authenticateToken, userControllers.enrollCourse);
 router.get('/details', auth.authenticateToken, userControllers.getProfile);
 
 module.exports = router;
