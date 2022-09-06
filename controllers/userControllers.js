@@ -3,13 +3,22 @@ const bcrypt = require('bcrypt');
 const auth = require('../auth');
 
 module.exports.getProfile = (req, res) => {
-    User.find({ _id: req.params.id })
+    const userData = auth.decode(req.headers.authorization);
+    
+    return User.findById(userData.id)
         .then(result => {
-            let copyOfResult = [...result];
-            copyOfResult[0].password = "";
-            return res.send(copyOfResult);
+            result.password = "***";
+            res.send(result);
         }).catch(err => res.send("Id not found!"));
 }
+// module.exports.getProfile = (req, res) => {
+//     User.find({ _id: req.params.id })
+//         .then(result => {
+//             let copyOfResult = [...result];
+//             copyOfResult[0].password = "*****";
+//             return res.send(copyOfResult);
+//         }).catch(err => res.send("Id not found!"));
+// }
 
 module.exports.register = (req, res) => {
     User.find({ email: req.body.email })
@@ -47,5 +56,5 @@ module.exports.login = (req, res) => {
             } else {
                 return res.send("Email is not found");
             }
-        });
+        }).catch(err => res.send(err));
 }

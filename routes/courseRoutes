@@ -1,0 +1,8 @@
+const courseControllers = require('../controllers/courseControllers');
+const express = require('express');
+const router = express.Router();
+const auth = require('../auth');
+
+router.post('/create', auth.authenticateToken, courseControllers.addCourse);
+
+module.exports = router;

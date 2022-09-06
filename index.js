@@ -16,7 +16,10 @@ db.on("error", console.error.bind(console, "Failed to connect to Database."));
 db.once("open", () => console.log("Connected to Database"));
 
 const userRoutes = require('./routes/userRoutes');
+const courseRoutes = require('./routes/courseRoutes');
+
 app.use('/users', userRoutes);
+app.use('/course', courseRoutes);
 
 const port = process.env.PORT || 3001;
 
